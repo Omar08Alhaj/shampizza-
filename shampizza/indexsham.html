@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيتزا ومعجنات الشام - أريحا</title>
+    <!-- Font Awesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #d9381e;
+            --primary-dark: #b2240d;
+            --secondary: #f4a261;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2b2d42;
+            --text-muted: #6c757d;
+            --border-color: #e9ecef;
+            --shadow: 0 10px 20px rgba(0,0,0,0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding-bottom: 90px;
+        }
+
+        /* Header / Banner */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.8rem 1rem 1.5rem;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 4px 15px rgba(217, 56, 30, 0.3);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container {
+            width: 95px;
+            height: 95px;
+            background: white;
+            border-radius: 50%;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            border: 3px solid #f4a261;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        header p.location {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 0.8rem;
+        }
+
+        .contacts-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .contact-chip {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        /* Search & Categories Nav */
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            background: var(--bg-color);
+            padding: 10px 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            outline: none;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 2px 12px rgba(217, 56, 30, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .categories-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 5px;
+        }
+
+        .categories-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Container & Menu Sections */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        /* Item Card */
+        .item-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 0.98rem;
+        }
+
+        .item-id {
+            background: #f1f3f5;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .item-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .item-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .item-price {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .size-select-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .size-select {
+            width: 100%;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            outline: none;
+            background: #fdfdfd;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .add-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Cart Floating Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+            padding: 12px 1rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        .cart-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-icon-btn {
+            position: relative;
+            background: #fff0f0;
+            color: var(--primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .cart-total-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-total-text span:first-child {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .cart-total-text span:last-child {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .checkout-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 1.2rem;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        /* Cart Items List */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-info h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .cart-item-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Notice Box */
+        .delivery-notice {
+            background: #fff8e1;
+            border-right: 4px solid #ffb300;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            margin: 12px 0;
+            color: #5d4037;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            margin-bottom: 6px;
+        }
+
+        .summary-row.total {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--primary);
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner Header with Logo -->
+    <header>
+        <div class="logo-container">
+            <img src="327389707_1935499343460015_4823758400653902569_n.jpg" alt="بيتزا الشام Logo" onerror="this.src='327389707_1935499343460015_4823758400653902569_n.jpg'">
+        </div>
+        <h1>بيتزا ومعجنات الشام</h1>
+        <p class="location"><i class="fa-solid fa-location-dot"></i> أريحا - أول شارع قصر هشام</p>
+        <div class="contacts-bar">
+            <a href="tel:0598224704" class="contact-chip"><i class="fa-solid fa-phone"></i> 0598-224704</a>
+            <a href="tel:022327575" class="contact-chip"><i class="fa-solid fa-phone-flip"></i> 02-2327575</a>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation & Search -->
+    <div class="sticky-wrapper">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن صنف أو اسم المأكولات..." oninput="filterMenu()">
+        </div>
+        <div class="categories-nav" id="categoriesNav">
+            <button class="cat-btn active" onclick="filterCategory('all', this)">الكل</button>
+            <button class="cat-btn" onclick="filterCategory('appetizers', this)">المقبلات</button>
+            <button class="cat-btn" onclick="filterCategory('italy_pizza', this)">بيتزا إيطالية</button>
+            <button class="cat-btn" onclick="filterCategory('india_pizza', this)">بيتزا هندية</button>
+            <button class="cat-btn" onclick="filterCategory('pastries', this)">المعجنات</button>
+            <button class="cat-btn" onclick="filterCategory('focaccia', this)">فوكاشيا</button>
+            <button class="cat-btn" onclick="filterCategory('meals', this)">الوجبات</button>
+        </div>
+    </div>
+
+    <!-- Main Menu Container -->
+    <div class="container" id="menuContainer">
+        <!-- Dynmically Rendered Categories -->
+    </div>
+
+    <!-- Bottom Cart Floating Bar -->
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-info">
+            <div class="cart-icon-btn" onclick="openCart()">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+            <div class="cart-total-text">
+                <span>إجمالي الطلب</span>
+                <span id="cartBarTotal">0 شيقل</span>
+            </div>
+        </div>
+        <button class="checkout-btn" onclick="openCart()">
+            <i class="fa-brands fa-whatsapp"></i> معاينة الطلب
+        </button>
+    </div>
+
+    <!-- Cart / Checkout Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-cart-shopping"></i> سلة المشتريات</h3>
+                <button class="close-btn" onclick="closeCart()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="cartList">
+                <!-- Cart Items dynamically added here -->
+            </div>
+
+            <div class="delivery-notice">
+                <i class="fa-solid fa-truck-fast"></i> 
+                تكلفة التوصيل 7 شيقل للطلب الأقل من 35 شيقل.<br>
+                <strong>التوصيل مجاني للطلبات بقيمة 35 شيقل وأكثر!</strong>
+            </div>
+
+            <div class="summary-section">
+                <div class="summary-row">
+                    <span>مجموع المأكولات:</span>
+                    <span id="subTotal">0 شيقل</span>
+                </div>
+                <div class="summary-row">
+                    <span>رسوم التوصيل:</span>
+                    <span id="deliveryFee">7 شيقل</span>
+                </div>
+                <div class="summary-row total">
+                    <span>المجموع النهائي:</span>
+                    <span id="finalTotal">0 شيقل</span>
+                </div>
+            </div>
+
+            <hr style="margin: 12px 0; border: none; border-top: 1px solid var(--border-color);">
+
+            <div class="form-group">
+                <label for="custName">الاسم الكريم:</label>
+                <input type="text" id="custName" placeholder="أدخل اسمك الكامل">
+            </div>
+            <div class="form-group">
+                <label for="custAddress">عنوان التوصيل (المكان / أريحا):</label>
+                <input type="text" id="custAddress" placeholder="أدخل العنوان للتوصيل بالتفصيل">
+            </div>
+            <div class="form-group">
+                <label for="custNotes">ملاحظات إضافية (اختياري):</label>
+                <textarea id="custNotes" rows="2" placeholder="مثال: بدون بصل، زيادة شطة..."></textarea>
+            </div>
+
+            <button class="checkout-btn" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="sendOrderToWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> تأكيد وإرسال عبر WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Full Items Menu Database
+        const menuData = [
+            // المقبلات
+            { id: 2, name: "شيبس بطاطا حجم صغير", price: 7, category: "appetizers" },
+            { id: 3, name: "شيبس بطاطا حجم كبير", price: 13, category: "appetizers" },
+            { id: 4, name: "خبز بتوم (5 قطع)", price: 7, category: "appetizers" },
+            { id: 5, name: "خبز بتوم بالجبنة (5 قطع)", price: 10, category: "appetizers" },
+            { id: 6, name: "فطيرة الثوم بالجبنة", price: 15, category: "appetizers" },
+            { id: 7, name: "أصابع الجبنة (الموزاريلا) (5 قطع)", price: 15, category: "appetizers" },
+            { id: 8, name: "أجنحة دجاج (8 قطع)", price: 18, category: "appetizers", desc: "صوس باربيكيو، صوي سويت تشيلي، صوص بوفالو، صوص تشيلي حار" },
+            { id: 9, name: "حلقات بصل 8 قطع", price: 12, category: "appetizers" },
+
+            // الوجبات
+            { id: 10, name: "وجبة دمشقية مع بطاطا", price: 25, category: "meals", desc: "لحمة، جبنة الموزاريلا، جبنة ميكس، جبنة شيدر" },
+            { id: 11, name: "وجبة مسحب إيطالي مع بطاطا", price: 25, category: "meals" },
+            { id: 12, name: "وجبة أجنحة مع بطاطا", price: 23, category: "meals" },
+            { id: 13, name: "وجبة أجنحة دجاج مع بطاطا", price: 23, category: "meals", desc: "صوس باربيكيو، صوي سويت تشيلي، صوص بوفالو، صوص تشيلي حار" },
+            { id: 14, name: "وجبة أصابع دجاج مع بطاطا", price: 22, category: "meals" },
+            { id: 15, name: "وجبة نقانق مع بطاطا", price: 20, category: "meals", desc: "أرز، مايونيز، ذرة، شرايح بندورة" },
+
+            // بيتزا إيطالية (جبنة العليمي)
+            { id: 16, name: "بيتزا مرجريتا (سادة)", isPizza: true, sizes: { S: 17, M: 30, L: 35, XL: 45 }, category: "italy_pizza" },
+            { id: 17, name: "بيتزا خضار", isPizza: true, sizes: { S: 20, M: 35, L: 45, XL: 55 }, category: "italy_pizza" },
+            { id: 18, name: "بيتزا بالنقانق + خضار", isPizza: true, sizes: { S: 20, M: 35, L: 45, XL: 55 }, category: "italy_pizza" },
+            { id: 19, name: "بيتزا ببروني + خضار", isPizza: true, sizes: { S: 22, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 20, name: "بيتزا الفصول الأربعة", isPizza: true, sizes: { M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 21, name: "بيتزا باللحمة + خضار", isPizza: true, sizes: { S: 25, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 22, name: "بيتزا تونا + خضار", isPizza: true, sizes: { S: 25, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 23, name: "بيتزا الدجاج + خضار", isPizza: true, sizes: { S: 25, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 24, name: "بيتزا الشام محشية الأطراف", isPizza: true, sizes: { S: 30, M: 45, L: 55, XL: 65 }, category: "italy_pizza" },
+            { id: 25, name: "بيتزا الأجبان الأربعة", isPizza: true, sizes: { S: 22, M: 35, L: 45, XL: 55 }, category: "italy_pizza" },
+            { id: 26, name: "بيتزا السجق", isPizza: true, sizes: { S: 25, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+            { id: 27, name: "بيتزا هالابينو مكسيكي", isPizza: true, sizes: { S: 25, M: 40, L: 50, XL: 60 }, category: "italy_pizza" },
+
+            // بيتزا الجبنة الأطراف الهولندية
+            { id: 28, name: "بيتزا خضار (أطراف هولندية)", isPizza: true, sizes: { S: 15, M: 25, L: 35, XL: 45 }, category: "india_pizza" },
+            { id: 29, name: "بيتزا بنقانق + خضار (أطراف هولندية)", isPizza: true, sizes: { S: 16, M: 25, L: 35, XL: 45 }, category: "india_pizza" },
+            { id: 30, name: "بيتزا ببروني + خضار (أطراف هولندية)", isPizza: true, sizes: { S: 16, M: 30, L: 35, XL: 50 }, category: "india_pizza" },
+            { id: 31, name: "بيتزا دجاج + خضار (أطراف هولندية)", isPizza: true, sizes: { S: 22, M: 35, L: 45, XL: 55 }, category: "india_pizza" },
+
+            // فوكاشيا
+            { id: 32, name: "فوكاشيا الأجبان", price: 10, category: "focaccia" },
+            { id: 33, name: "فوكاشيا مع بيض وجبنة", price: 8, category: "focaccia" },
+            { id: 34, name: "فوكاشيا مع لبنة", price: 12, category: "focaccia" },
+            { id: 35, name: "صفحة أرمنية مع بندورة", price: 12, category: "focaccia" },
+            { id: 36, name: "صفحة أرمنية بالطحينية", price: 11, category: "focaccia" },
+            { id: 37, name: "فوكاشيا اللحمة مع مكس الأجبان / فطر طازج / باذنجان", price: 9, category: "focaccia" },
+
+            // المعجنات
+            { id: 38, name: "بيتزا عادي مع فلفل وزيتون", price: 8, category: "pastries" },
+            { id: 39, name: "مطبق بيتزا عربي", price: 8, category: "pastries" },
+            { id: 40, name: "جبنة بيضاء سادة", price: 8, category: "pastries" },
+            { id: 41, name: "جبنة بيضاء مع زعتر أخضر ورق", price: 8, category: "pastries" },
+            { id: 42, name: "جبنة بيضاء لف مع قزحة وزعتر", price: 7, category: "pastries" },
+            { id: 43, name: "جبنة صفراء مع زيتون أخضر", price: 8, category: "pastries" },
+            { id: 44, name: "جبنة صفراء سادة", price: 8, category: "pastries" },
+            { id: 45, name: "جبنة صفراء (مرشولاش) عيمك", price: 9, category: "pastries" },
+            { id: 46, name: "جبنة بيضاء شامية بخلطة سحرية", price: 7, category: "pastries" },
+            { id: 47, name: "مشولاش عيمك مع بيض مسلوق", price: 11, category: "pastries" },
+            { id: 48, name: "نص قمر جبنة بيضاء وزعتر", price: 8, category: "pastries" },
+            { id: 49, name: "نقانق مع جبنة صفراء", price: 8, category: "pastries" },
+            { id: 50, name: "نقانق بالكتشاب مع زيتون أخضر", price: 7, category: "pastries" },
+            { id: 51, name: "نقانق سادة", price: 7, category: "pastries" },
+            { id: 52, name: "صفيحة بندورة", price: 8, category: "pastries" },
+            { id: 53, name: "صفيحة طحينية", price: 8, category: "pastries" },
+            { id: 54, name: "سمبوسك لحمة", price: 3, category: "pastries" },
+            { id: 55, name: "زيانة لحمة", price: 8, category: "pastries" },
+            { id: 56, name: "عرايس لحمة", price: 5, category: "pastries" },
+            { id: 57, name: "جبنة شامية مع بيض", price: 10, category: "pastries" },
+            { id: 58, name: "دجاج مسحب", price: 8, category: "pastries" },
+            { id: 59, name: "سبانخ", price: 8, category: "pastries" },
+            { id: 60, name: "سبانخ مع جبنة", price: 8, category: "pastries" },
+            { id: 61, name: "سبانخ مع لحمة", price: 9, category: "pastries" },
+            { id: 62, name: "زعتر أخضر ورق سادة", price: 5, category: "pastries" },
+            { id: 63, name: "مناقيش زعتر", price: 5, category: "pastries" },
+            { id: 64, name: "مسحب دجاج مع جبنة", price: 11, category: "pastries" },
+            { id: 65, name: "مكس الأجبان الأربعة", price: 10, category: "pastries" },
+            { id: 66, name: "جبنة بيضاء عكاوي", price: 8, category: "pastries" },
+            { id: 67, name: "رول مسخن", price: 9, category: "pastries" },
+            { id: 68, name: "جبنة بيضاء على الوجه زعتر", price: 12, category: "pastries" },
+            { id: 69, name: "بطاطا مع لحمة وجبنة", price: 9, category: "pastries" },
+            { id: 70, name: "بطاطا مع لحمة", price: 8, category: "pastries" },
+            { id: 71, name: "بطاطا مع جبنة", price: 8, category: "pastries" },
+            { id: 72, name: "بيض سادة", price: 6, category: "pastries" },
+            { id: 73, name: "بيض مع سجق", price: 11, category: "pastries" },
+            { id: 74, name: "بيض مع نقانق", price: 9, category: "pastries" },
+            { id: 75, name: "بيض مع جبنة بيضاء", price: 9, category: "pastries" },
+            { id: 76, name: "بيض مع جبنة صفراء", price: 9, category: "pastries" },
+            { id: 77, name: "بيض مع لحمة", price: 10, category: "pastries" },
+            { id: 78, name: "بيض مع نقانق وجبنة صفراء", price: 11, category: "pastries" },
+            { id: 79, name: "بيض مع سلامي", price: 8, category: "pastries" },
+            { id: 80, name: "بيض مع زيتون أخضر", price: 7, category: "pastries" },
+            { id: 81, name: "بيض مع سجق وجبنة عيمك", price: 15, category: "pastries" },
+            { id: 82, name: "عجة بيض", price: 7, category: "pastries" },
+            { id: 83, name: "بيض مع جبنة صفراء إيطالية عيمك", price: 10, category: "pastries" },
+            { id: 84, name: "بيض مع جبنة مثلثات", price: 10, category: "pastries" }
+        ];
+
+        const categoryNames = {
+            appetizers: "المقبلات والوجبات الخفيفة",
+            meals: "الوجبات الرئيسية",
+            italy_pizza: "البيتزا الإيطالية (جبنة العليمي)",
+            india_pizza: "البيتزا محشية الأطراف (هولندية)",
+            pastries: "المعجنات الفاخرة",
+            focaccia: "الفوكاشيا والصفائح"
+        };
+
+        let cart = [];
+
+        // Render Menu
+        function renderMenu(itemsToRender = menuData) {
+            const container = document.getElementById('menuContainer');
+            container.innerHTML = '';
+
+            const grouped = {};
+            itemsToRender.forEach(item => {
+                if (!grouped[item.category]) grouped[item.category] = [];
+                grouped[item.category].push(item);
+            });
+
+            for (let catKey in grouped) {
+                const catHeader = document.createElement('div');
+                catHeader.className = 'category-title';
+                catHeader.innerHTML = `<i class="fa-solid fa-utensils"></i> ${categoryNames[catKey] || catKey}`;
+                container.appendChild(catHeader);
+
+                const grid = document.createElement('div');
+                grid.className = 'menu-grid';
+
+                grouped[catKey].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+
+                    let priceOrSizeHTML = '';
+                    if (item.isPizza) {
+                        let options = Object.keys(item.sizes).map(size => `<option value="${size}">${size} (${item.sizes[size]} شيقل)</option>`).join('');
+                        priceOrSizeHTML = `
+                            <div class="size-select-wrapper">
+                                <select class="size-select" id="size-${item.id}">
+                                    ${options}
+                                </select>
+                            </div>
+                            <div class="item-footer">
+                                <span class="item-price">اختر الحجم</span>
+                                <button class="add-btn" onclick="addPizzaToCart(${item.id})"><i class="fa-solid fa-plus"></i> إضافة</button>
+                            </div>
+                        `;
+                    } else {
+                        priceOrSizeHTML = `
+                            <div class="item-footer">
+                                <span class="item-price">${item.price} شيقل</span>
+                                <button class="add-btn" onclick="addToCart(${item.id})"><i class="fa-solid fa-plus"></i> إضافة</button>
+                            </div>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="item-header">
+                                <span class="item-title">${item.name}</span>
+                                <span class="item-id">#${item.id}</span>
+                            </div>
+                            ${item.desc ? `<div class="item-desc">\${item.desc}</div>` : ''}
+                        </div>
+                        ${priceOrSizeHTML}
+                    `;
+                    grid.appendChild(card);
+                });
+
+                container.appendChild(grid);
+            }
+        }
+
+        // Add Regular Item
+        function addToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            const existing = cart.find(c => c.id === itemId && !c.size);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ id: item.id, name: item.name, price: item.price, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        // Add Pizza Item
+        function addPizzaToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            const selectedSize = document.getElementById(`size-${itemId}`).value;
+            const price = item.sizes[selectedSize];
+            const nameWithSize = `${item.name} (حجم ${selectedSize})`;
+
+            const existing = cart.find(c => c.id === itemId && c.size === selectedSize);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ id: item.id, name: nameWithSize, price: price, qty: 1, size: selectedSize });
+            }
+            updateCartUI();
+        }
+
+        // Update Cart
+        function updateCartUI() {
+            const totalItemsCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            document.getElementById('cartBadge').innerText = totalItemsCount;
+
+            const deliveryFee = subtotal >= 35 || subtotal === 0 ? 0 : 7;
+            const finalTotal = subtotal + deliveryFee;
+
+            document.getElementById('cartBarTotal').innerText = `${finalTotal} شيقل`;
+            document.getElementById('subTotal').innerText = `${subtotal} شيقل`;
+            document.getElementById('deliveryFee').innerText = subtotal >= 35 ? "مجاني 🎉" : `${deliveryFee} شيقل`;
+            document.getElementById('finalTotal').innerText = `${finalTotal} شيقل`;
+
+            // Render modal cart list
+            const cartList = document.getElementById('cartList');
+            if (cart.length === 0) {
+                cartList.innerHTML = `<div class="empty-cart-msg"><i class="fa-solid fa-basket-shopping fa-2x"></i><br>السلة فارغة حالياً</div>`;
+            } else {
+                cartList.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.price} شيقل × ${item.qty} = ${item.price * item.qty} شيقل</p>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function changeQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (cat === 'all') {
+                renderMenu(menuData);
+            } else {
+                const filtered = menuData.filter(i => i.category === cat);
+                renderMenu(filtered);
+            }
+        }
+
+        function filterMenu() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = menuData.filter(i => i.name.toLowerCase().includes(query) || i.id.toString().includes(query));
+            renderMenu(filtered);
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('active');
+        }
+
+        // WhatsApp Integration
+        function sendOrderToWhatsApp() {
+            if (cart.length === 0) {
+                alert("يرجى إضافة مأكولات إلى السلة أولاً!");
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const notes = document.getElementById('custNotes').value.trim();
+
+            if (!name || !address) {
+                alert("يرجى إدخال الاسم والعنوان لتأكيد الطلب!");
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const deliveryFee = subtotal >= 35 ? 0 : 7;
+            const finalTotal = subtotal + deliveryFee;
+
+            let msg = `*طلب جديد من موقع بيتزا ومعجنات الشام* 🍕\n\n`;
+            msg += `👤 *الاسم:* ${name}\n`;
+            msg += `📍 *العنوان:* ${address}\n`;
+            if (notes) msg += `📝 *ملاحظات:* ${notes}\n`;
+            msg += `-----------------------------------\n`;
+            msg += `*تفاصيل الطلب:*\n`;
+
+            cart.forEach(item => {
+                msg += `• ${item.name} | العدد: ${item.qty} | السعر: ${item.price * item.qty} شيقل\n`;
+            });
+
+            msg += `-----------------------------------\n`;
+            msg += `💵 *المجموع:* ${subtotal} شيقل\n`;
+            msg += `🛵 *التوصيل:* ${deliveryFee === 0 ? 'مجاني' : deliveryFee + ' شيقل'}\n`;
+            msg += `💰 *الإجمالي النهائي:* ${finalTotal} شيقل\n`;
+
+            const phone = "972598224704"; // رقم المطعم صيغة دولية
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        }
+
+        // Initial Render
+        renderMenu();
+    </script>
+</body>
+</html>
